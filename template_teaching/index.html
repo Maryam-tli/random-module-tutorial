@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Random Module Guide</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <script>
+        function scrollToSection() {
+            var select = document.getElementById("menu-dropdown");
+            var sectionId = select.value;
+            var section = document.querySelector(sectionId);
+
+            if (section) {
+                section.scrollIntoView({ behavior: "smooth" });
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="intro">
+        <div class="intro-content">
+            <h1>Mastering the <code>random</code> Module in Python 🎲</h1>
+            <p>
+                The <code>random</code> module in Python is a powerful tool for generating randomness in programs.
+                Whether you're building simulations, games, or cryptographic applications, understanding this module 
+                will take your Python skills to the next level.
+            </p>
+            <p>
+                Let's dive into the world of randomness in Python! 🚀
+            </p>
+        </div>
+    </div>
+    
+    <div class="menu">
+        <select id="menu-dropdown" onchange="scrollToSection()">
+            <option value="#">Select a section</option> <!-- اولین گزینه خالی -->
+            {% for item in posts %}
+                <option value="#post-{{ item.id }}">{{ item.title }}</option>
+            {% endfor %}
+        </select>
+    </div>    
+
+    {% for item in posts %}
+      <div class="container">
+        <div id="post-{{ item.id }}" class="section">
+            <h2>{{ item.title }}</h2>
+            <p>{{ item.content }}</p>
+            <p><strong> 
+                {% for tag in item.tags.all %}
+                    <span class="tag">{{ tag.name }}</span>
+                {% endfor %}
+            </strong></p>
+            <div class="code-box">
+                <pre>{{ item.example_code }}</pre>
+            </div>
+            <h4>{{ item.views }}</h4>
+        </div>
+      </div>
+    {% endfor %}
+</body>
+</html>
